@@ -46,8 +46,7 @@ public class UserController {
     }
 
     @PutMapping("/user/{id}")
-    public Response updateUserById(@PathVariable long id, @RequestParam(required = false) String name,
-                                            @RequestParam(required = false) String email)  {
+    public Response updateUserById(@PathVariable long id, @RequestParam(required = false) String name, @RequestParam(required = false) String email)  {
         return Response.success(userService.updateUserById(id, name, email));
     }
 

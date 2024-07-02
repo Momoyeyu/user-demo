@@ -22,11 +22,11 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public UserDTO login(User user) {
-        user = userRepository.findByName(user.getUsername());
+    public UserDTO login(User userReceived) {
+        User user = userRepository.findByName(userReceived.getUsername());
         if (user == null)
             return null;
-        if (user.getPassword().equals(DigestUtils.md5DigestAsHex((user.getPassword()).getBytes())))
+        if (user.getPassword().equals(DigestUtils.md5DigestAsHex((userReceived.getPassword()).getBytes())))
             return convertUser(user);
         return null;
     }

@@ -1,0 +1,9 @@
+
+-- user
+CREATE TABLE IF NOT EXISTS Users
+    id INT UNSIGNED AUTO_INCREMENT COMMENT '用户ID' PRIMARY KEY,
+    username VARCHAR(20) NOT NULL COMMENT '用户名',
+    password CHAR(32) NOT NULL COMMENT '密码',
+    email VARCHAR(32) DEFAULT NULL COMMENT '邮箱',
+    CONSTRAINT jdc_users_uk UNIQUE (username)
+);

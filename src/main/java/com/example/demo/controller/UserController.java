@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.Response;
+import com.example.demo.entity.Response;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
@@ -14,25 +14,30 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/api/login")
-    public Response<UserDTO> login(@RequestBody UserDTO userDTO) {
-        userDTO = userService.login(userDTO);
-        return Response.newSuccess(userDTO);
+    public Response login(@RequestBody User user) {
+        UserDTO userDTO = userService.login(user);
+        if (userDTO == null)
+            return Response.fail("wrong username or password!");
+        return Response.success(userDTO);
     }
 
     @PostMapping("/api/register")
-    public Response<UserDTO> register(@RequestBody UserDTO userDTO) {
-
+    public Response register(@RequestBody User user) {
+        UserDTO userDTO = userService.register(user);
+        if (userDTO == null)
+            return Response.fail("username or email has been used!");
+        return Response.success(userDTO);
     }
 
     @GetMapping("/user/{id}")
-    public Response<UserDTO> getUserById(@PathVariable long id) {
-        return Response.newSuccess(userService.getUserById(id));
+    public Response getUserById(@PathVariable long id) {
+        return Response.success(userService.getUserById(id));
     }
 
     @PostMapping("/user")
-    public Response<Long> addNewUser(@RequestBody UserDTO userDTO) {
+    public Response addNewUser(@RequestBody UserDTO userDTO) {
         // TODO：校验
-        return Response.newSuccess(userService.addNewUser(userDTO));
+        return Response.success(userService.addNewUser(userDTO));
     }
 
     @DeleteMapping("/user/{id}")
@@ -41,9 +46,9 @@ public class UserController {
     }
 
     @PutMapping("/user/{id}")
-    public Response<UserDTO> updateUserById(@PathVariable long id, @RequestParam(required = false) String name,
+    public Response updateUserById(@PathVariable long id, @RequestParam(required = false) String name,
                                             @RequestParam(required = false) String email)  {
-        return Response.newSuccess(userService.updateUserById(id, name, email));
+        return Response.success(userService.updateUserById(id, name, email));
     }
 
 }

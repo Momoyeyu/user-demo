@@ -22,8 +22,8 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public UserDTO login(UserDTO userDTO) {
-        User user = userRepository.findByName(userDTO.getUsername());
+    public UserDTO login(User user) {
+        user = userRepository.findByName(user.getUsername());
         if (user == null)
             return null;
         if (user.getPassword().equals(DigestUtils.md5DigestAsHex((user.getPassword()).getBytes())))
@@ -31,15 +31,14 @@ public class UserService {
         return null;
     }
 
-    public UserDTO register(UserDTO userDTO) {
-        List<User> userList = userRepository.findByEmail(userDTO.getEmail());
+    public UserDTO register(User user) {
+        List<User> userList = userRepository.findByEmail(user.getEmail());
         if (!CollectionUtils.isEmpty(userList)) // check email
-            throw new IllegalStateException("email:" + userDTO.getEmail() + "has been used!");
-        userList = userRepository.findByEmail(userDTO.getUsername());
+            throw new IllegalStateException("email:" + user.getEmail() + "has been used!");
+        userList = userRepository.findByEmail(user.getUsername());
         if (!CollectionUtils.isEmpty(userList)) // check username
-            throw new IllegalStateException("username:" + userDTO.getUsername() + "has been used!");
+            throw new IllegalStateException("username:" + user.getUsername() + "has been used!");
         // save and return
-        User user = convertUser(userDTO);
         user.setPassword(DigestUtils.md5DigestAsHex(user.getPassword().getBytes()));
         user.setCreateTime(new Date());
         user = userRepository.save(user);

@@ -13,6 +13,17 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @PostMapping("/api/login")
+    public Response<UserDTO> login(@RequestBody UserDTO userDTO) {
+        userDTO = userService.login(userDTO);
+        return Response.newSuccess(userDTO);
+    }
+
+    @PostMapping("/api/register")
+    public Response<UserDTO> register(@RequestBody UserDTO userDTO) {
+
+    }
+
     @GetMapping("/user/{id}")
     public Response<UserDTO> getUserById(@PathVariable long id) {
         return Response.newSuccess(userService.getUserById(id));

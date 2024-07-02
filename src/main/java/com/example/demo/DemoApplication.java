@@ -3,6 +3,12 @@ package com.example.demo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * 程序入口
+ *
+ * @author Momoyeyu
+ * @version 0.1
+ */
 @SpringBootApplication
 public class DemoApplication {
 
